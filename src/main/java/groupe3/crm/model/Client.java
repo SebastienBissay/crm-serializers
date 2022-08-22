@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import lombok.Data;
@@ -39,8 +40,8 @@ public class Client {
     @Column(nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
-    private String company;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "client", orphanRemoval = true, cascade = CascadeType.REMOVE)
+    private Company company;
 
     @Email
     @Column(nullable = false)

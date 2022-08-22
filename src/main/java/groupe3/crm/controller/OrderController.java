@@ -7,7 +7,6 @@ import groupe3.crm.model.Order;
 import groupe3.crm.service.IClientService;
 import groupe3.crm.service.IOrderService;
 import io.swagger.annotations.ApiOperation;
-import java.util.List;
 import java.util.Optional;
 import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,11 +67,11 @@ public class OrderController {
         }
     }
 
-    @PostMapping(value = "{id}", consumes = MediaType.APPLICATION_JSON)
+    @PostMapping( consumes = MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Creates a new order", nickname = "Create an order")
-    public ResponseEntity create(@RequestBody Order order, @PathVariable("id") Long clientId) {
+    public ResponseEntity create(@RequestBody Order order) {
         try {
-            Optional<Client> client = this.clientService.getById(clientId);
+            Optional<Client> client = this.clientService.getById(order.getClient().getId());
             if (client.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found.");
             }

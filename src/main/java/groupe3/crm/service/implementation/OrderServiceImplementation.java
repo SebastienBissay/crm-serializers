@@ -1,4 +1,4 @@
-package groupe3.crm.service;
+package groupe3.crm.service.implementation;
 
 import groupe3.crm.model.Order;
 import java.util.List;
@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import groupe3.crm.repository.OrderRepository;
+import groupe3.crm.service.IOrderService;
 import javax.ws.rs.NotFoundException;
 
 /**
