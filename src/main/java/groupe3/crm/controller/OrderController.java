@@ -6,6 +6,7 @@ import groupe3.crm.model.Client;
 import groupe3.crm.model.Order;
 import groupe3.crm.service.IClientService;
 import groupe3.crm.service.IOrderService;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.Optional;
 import javax.ws.rs.core.MediaType;
@@ -39,16 +40,17 @@ public class OrderController {
     }
     
         @GetMapping(produces = MediaType.APPLICATION_JSON)
+        @ApiOperation(value = "Returns the list of all orders", nickname = "Get all orders", response = Order.class)
     public ResponseEntity getAllOrders() {
-        List<Order> orders = this.orderService.getAll();
         try {
-            return ResponseEntity.ok(new ObjectMapper().writeValueAsString(orders));
+            return ResponseEntity.ok(new ObjectMapper().writeValueAsString(this.orderService.getAll()));
         } catch (JsonProcessingException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("An error occurred.");
         }
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Returns the order with given id", nickname = "Get an order", response = Client.class)
     public ResponseEntity getById(@PathVariable("id") Long id) {
         Optional<Order> order;
         try {
@@ -67,6 +69,7 @@ public class OrderController {
     }
 
     @PostMapping(value = "{id}", consumes = MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Creates a new order", nickname = "Create an order")
     public ResponseEntity create(@RequestBody Order order, @PathVariable("id") Long clientId) {
         try {
             Optional<Client> client = this.clientService.getById(clientId);
@@ -82,6 +85,7 @@ public class OrderController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Updates the order with given id", nickname = "Update order")
     public ResponseEntity update(@RequestBody Order order, @PathVariable("id") Long id) {
         try {
             this.orderService.update(order, id);
@@ -92,6 +96,7 @@ public class OrderController {
     }
     
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deletes the order with given id", nickname = "Delete order")
     public ResponseEntity delete(@PathVariable("id") Long id) {
         Optional<Order> order;
         try {

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import groupe3.crm.service.IClientService;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import javax.ws.rs.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,7 @@ public class ClientController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Returns the list of all clients", nickname = "Get all clients", response = Client.class)
     public ResponseEntity getAllClients() {
         String serialized = "";
         List<Client> clients = this.clientService.getAll();
@@ -46,6 +48,7 @@ public class ClientController {
         }
     }
 
+    @ApiOperation(value = "Returns the client with given id", nickname = "Get a client", response = Client.class)
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity getById(@PathVariable("id") Long id) {
         Optional<Client> client;
@@ -65,6 +68,7 @@ public class ClientController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Creates a new client", nickname = "Create a client")
     public ResponseEntity create(@RequestBody Client client) {
         try {
             this.clientService.create(client);
@@ -75,6 +79,7 @@ public class ClientController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Updates the client with given id", nickname = "Update client")
     public ResponseEntity update(@RequestBody Client client, @PathVariable("id") Long id) {
         try {
             this.clientService.update(client, id);
@@ -87,6 +92,7 @@ public class ClientController {
     }
     
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deletes the client with given id", nickname = "Delete client")
     public ResponseEntity delete(@PathVariable("id") Long id) {
         Optional<Client> client;
         try {
