@@ -28,18 +28,48 @@
 					"response": []
 				},
 				{
-					"name": "Get Client By Id",
+					"name": "Get Clients By Name",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\":\"ALEX\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{API_URI}}/clients/1",
+							"raw": "{{API_URI}}/clients/",
 							"host": [
 								"{{API_URI}}"
 							],
 							"path": [
 								"clients",
-								"1"
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Client By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/clients/4",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"clients",
+								"4"
 							]
 						}
 					},
@@ -141,6 +171,36 @@
 					"response": []
 				},
 				{
+					"name": "Get Commands By Label",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"label\":\"TEst\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URI}}/commands/",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"commands",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get Command By Id",
 					"request": {
 						"method": "GET",
@@ -165,7 +225,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"lastName\":\"Créman\",\r\n    \"firstName\":\"Alex\",\r\n    \"email\":\"alex.cremant@m2i.fr\",\r\n    \"phone\":\"0473429397\",\r\n    \"address\":\"13 rue du 14 juillet\",\r\n    \"city\":\"Lyon\",\r\n    \"zipCode\":\"69004\",\r\n    \"country\":\"France\"\r\n}",
+							"raw": "{\r\n    \"label\": \"Commande final\",\r\n    \"products\":[\r\n        {\r\n            \"id\":\"11\"\r\n        },\r\n        {\r\n            \"id\":\"11\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -247,13 +307,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{API_URI}}/commands/8",
+							"raw": "{{API_URI}}/commands/10",
 							"host": [
 								"{{API_URI}}"
 							],
 							"path": [
 								"commands",
-								"8"
+								"10"
 							]
 						}
 					},
@@ -600,6 +660,21 @@
 			]
 		}
 	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "password",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "user",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
