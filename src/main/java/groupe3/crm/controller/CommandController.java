@@ -3,6 +3,7 @@ package groupe3.crm.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import groupe3.crm.model.Command;
+import groupe3.crm.model.ListLength;
 import groupe3.crm.model.Product;
 import groupe3.crm.service.ICommandService;
 import groupe3.crm.service.IProductService;
@@ -47,7 +48,8 @@ public class CommandController {
     public ResponseEntity getAllCommands() {
         List<Command> commands = this.commandService.getAll();
         try {
-            return ResponseEntity.ok(new ObjectMapper().writeValueAsString(commands));
+            ListLength l = new ListLength(commands.size());
+            return ResponseEntity.ok(new ObjectMapper().writeValueAsString(l) + new ObjectMapper().writeValueAsString(commands));
         } catch (JsonProcessingException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("An error occurred.");
         }
@@ -149,5 +151,17 @@ public class CommandController {
         }
         this.commandService.delete(id);
         return ResponseEntity.ok("Command successfully deleted.");
+    }
+    
+    @GetMapping(consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Returns the list of commands whose label contains 'label'", nickname = "Get commands by label", response = Command.class)
+    public ResponseEntity getCommandsByLabel(@RequestBody Command command) {
+        List<Command> commands = this.commandService.getByLabel(command.getLabel());
+        try {
+            ListLength l = new ListLength(commands.size());
+            return ResponseEntity.ok(new ObjectMapper().writeValueAsString(l) + new ObjectMapper().writeValueAsString(commands));
+        } catch (JsonProcessingException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("An error occurred.");
+        }
     }
 }

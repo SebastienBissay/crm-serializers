@@ -26,6 +26,7 @@ public class CommandSerializer extends StdSerializer<Command> {
     public void serialize(Command command, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException, JsonProcessingException {
         jsonGenerator.writeStartObject();
         jsonGenerator.writeNumberField("id", command.getId());
+        jsonGenerator.writeStringField("label", command.getLabel());
         jsonGenerator.writeArrayFieldStart("products");
             for (Product product : command.getProducts()) {
                 jsonGenerator.writeStartObject();

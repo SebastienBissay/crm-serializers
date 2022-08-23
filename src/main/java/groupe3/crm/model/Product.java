@@ -2,6 +2,7 @@ package groupe3.crm.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import groupe3.crm.serializer.ProductSerializer;
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonSerialize(using = ProductSerializer.class)
-public class Product {
+public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

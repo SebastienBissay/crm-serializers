@@ -2,8 +2,10 @@ package groupe3.crm.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import groupe3.crm.serializer.CommandSerializer;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,11 +27,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonSerialize(using = CommandSerializer.class)
-public class Command {
+public class Command implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    @Column(nullable = false)
+    private String label;
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -51,6 +56,9 @@ public class Command {
         if (!commandData.products.isEmpty()) {
             this.products.clear();
             this.products.addAll(commandData.products);
+        }
+        if (commandData.label != null) {
+            this.label = commandData.label;
         }
     }
     

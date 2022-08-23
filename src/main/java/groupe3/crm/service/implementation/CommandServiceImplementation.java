@@ -65,5 +65,9 @@ public class CommandServiceImplementation implements ICommandService{
     public void delete(Long id) {
         this.commandRepository.deleteById(id);
     }
-    
+
+    @Override
+    public List<Command> getByLabel(String label) {
+        return this.commandRepository.findByLabelContainingIgnoringCase(label);
+    }
 }

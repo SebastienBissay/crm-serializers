@@ -2,6 +2,7 @@ package groupe3.crm.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import groupe3.crm.serializer.CompanySerializer;
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,7 +26,7 @@ import org.hibernate.validator.constraints.Length;
 @Data
 @NoArgsConstructor
 @JsonSerialize(using = CompanySerializer.class)
-public class Company {
+public class Company implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

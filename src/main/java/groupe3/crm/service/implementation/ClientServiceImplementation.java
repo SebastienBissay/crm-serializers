@@ -55,4 +55,9 @@ public class ClientServiceImplementation implements IClientService {
         this.clientRepository.save(oldClient);
     }
 
+    @Override
+    public List<Client> getByName(String name) {
+        return this.clientRepository.findByFirstNameContainingOrLastNameContainingAllIgnoringCase(name, name);
+    }
+
 }

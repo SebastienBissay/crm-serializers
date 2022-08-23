@@ -19,4 +19,6 @@ public interface IClientService {
     public void update(Client client, Long id);
 
     public void delete(Long id);
+    
+    public List<Client> getByName(String name);
 }
