@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `crm_db` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `crm_db`;
 -- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
 --
 -- Host: localhost    Database: crm_db
@@ -45,7 +43,7 @@ CREATE TABLE `clients` (
 
 LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
-INSERT INTO `clients` VALUES (4,_binary '','13 rue du 14 juillet','Lyon','France','alex.cremant@m2i.fr','Alex','Créman','0473429397',69004);
+INSERT INTO `clients` VALUES (4,_binary '','13 rue du 14 juillet','Lyon','France','alex.cremant@m2i.fr','Alex','Créman','0473429397',69004),(14,_binary '','13 rue du 14 juillet','Lyon','France','alex.térieur@m2i.fr','Alex','Térieur','0473429397',69004),(15,_binary '','13 rue du 14 juillet','Lyon','France','alex.térieur@m2i.fr','Alex','Térieur','0473429397',69004);
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -72,7 +70,7 @@ CREATE TABLE `command_products` (
 
 LOCK TABLES `command_products` WRITE;
 /*!40000 ALTER TABLE `command_products` DISABLE KEYS */;
-INSERT INTO `command_products` VALUES (10,11),(10,11);
+INSERT INTO `command_products` VALUES (12,11),(13,11),(13,11);
 /*!40000 ALTER TABLE `command_products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,6 +83,7 @@ DROP TABLE IF EXISTS `commands`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `commands` (
   `id` bigint(20) NOT NULL,
+  `label` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -95,7 +94,7 @@ CREATE TABLE `commands` (
 
 LOCK TABLES `commands` WRITE;
 /*!40000 ALTER TABLE `commands` DISABLE KEYS */;
-INSERT INTO `commands` VALUES (10);
+INSERT INTO `commands` VALUES (12,'Commande test'),(13,'Commande final');
 /*!40000 ALTER TABLE `commands` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,8 +147,36 @@ CREATE TABLE `hibernate_sequence` (
 
 LOCK TABLES `hibernate_sequence` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (12);
+INSERT INTO `hibernate_sequence` VALUES (17);
 /*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `operations`
+--
+
+DROP TABLE IF EXISTS `operations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `operations` (
+  `id` bigint(20) NOT NULL,
+  `target` varchar(255) NOT NULL,
+  `target_id` bigint(20) NOT NULL,
+  `operation_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `type` enum('CREATE','DELETE','MODIFY') NOT NULL,
+  `usr` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `operations`
+--
+
+LOCK TABLES `operations` WRITE;
+/*!40000 ALTER TABLE `operations` DISABLE KEYS */;
+INSERT INTO `operations` VALUES (16,'Client',15,'2022-08-23 18:16:25','CREATE','user');
+/*!40000 ALTER TABLE `operations` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -218,4 +245,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-23  0:55:54
+-- Dump completed on 2022-08-24  9:13:58

@@ -658,6 +658,19 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "History",
+			"item": [
+				{
+					"name": "Gell history",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {

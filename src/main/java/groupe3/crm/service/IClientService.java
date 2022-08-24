@@ -14,11 +14,11 @@ public interface IClientService {
 
     public Optional<Client> getById(Long id);
 
-    public void create(Client client);
+    public void create(Client client, String user);
 
-    public void update(Client client, Long id);
+    public void update(Client client, Long id, String user);
 
-    public void delete(Long id);
+    public void delete(Long id, String user);
     
     public List<Client> getByName(String name);
 }

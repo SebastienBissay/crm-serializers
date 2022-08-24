@@ -15,9 +15,11 @@ import groupe3.crm.service.IClientService;
 import io.swagger.annotations.ApiOperation;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -71,9 +73,9 @@ public class ClientController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Creates a new client", nickname = "Create a client")
-    public ResponseEntity create(@RequestBody Client client) {
+    public ResponseEntity create(@RequestBody Client client, Authentication authentification) {
         try {
-            this.clientService.create(client);
+            this.clientService.create(client, authentification.getName());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("An error occurred.");
         }
@@ -82,9 +84,9 @@ public class ClientController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Updates the client with given id", nickname = "Update client")
-    public ResponseEntity update(@RequestBody Client client, @PathVariable("id") Long id) {
+    public ResponseEntity update(@RequestBody Client client, @PathVariable("id") Long id, Authentication authentification) {
         try {
-            this.clientService.update(client, id);
+            this.clientService.update(client, id, authentification.getName());
         } catch (NotFoundException nfe) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found.");
         } catch (Exception e) {
@@ -95,7 +97,7 @@ public class ClientController {
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Deletes the client with given id", nickname = "Delete client")
-    public ResponseEntity delete(@PathVariable("id") Long id) {
+    public ResponseEntity delete(@PathVariable("id") Long id, Authentication authentification) {
         Optional<Client> client;
         try {
             client = this.clientService.getById(id);
@@ -105,7 +107,7 @@ public class ClientController {
         if (client.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found.");
         }
-        this.clientService.delete(id);
+        this.clientService.delete(id, authentification.getName());
         return ResponseEntity.ok("Client successfully deleted.");
     }
 
