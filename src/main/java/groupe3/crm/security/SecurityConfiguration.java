@@ -1,45 +1,70 @@
 package groupe3.crm.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import groupe3.crm.service.implementation.UserServiceImplementation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  *
- * @author Pad
+ * @author Sebastien Bissay
  */
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private final UserServiceImplementation userService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    public SecurityConfiguration() {}
-
-    // Méthode pour configurer le mode d'authentification
-    @Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication() // Authentification en mémoire, donc pas de vérif en BDD
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .withUser("user").password("password")
-                .roles("USER");
+    public SecurityConfiguration(UserServiceImplementation userService, BCryptPasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    // Permet de configurer la protection url
-    @Override
+   @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .anyRequest().permitAll();// Pour toutes les autres requêtes, on demande une authentification
-        
-        http.csrf().disable();
+                .authorizeHttpRequests()
+                .antMatchers("/login/**") 
+                .permitAll()
+                .antMatchers("/distributeur*")
+                .hasRole("CUSTOMER")
+                .antMatchers("/manage/products/**")
+                .hasRole("PROVIDER")
+                .antMatchers("/manage/**")
+                .hasRole("ADMIN")
+                .antMatchers("/manage/users/**")
+                .hasRole("ADMIN")
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin(); // On active le formulaire de login
+//                .and()
+//                .logout()
+//                .invalidateHttpSession(true)
+//                .clearAuthentication(true); // on configure notre propre page de login au lieu de la page par défaut
+
+//        http.csrf().disable();
+//        http.headers().frameOptions().disable();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+        auth.setUserDetailsService(userService);
+        auth.setPasswordEncoder(passwordEncoder);
+        return auth;
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authenticationProvider());
     }
 
     @Bean
