@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonSerialize(using = OrderSerializer.class)
-public class Order implements Serializable {
+public class Order extends AbstractEntity<Order> implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
@@ -60,6 +60,7 @@ public class Order implements Serializable {
         return this.getTotalWithoutTax() * 1.20;
     }
     
+    @Override
     public void copy(Order orderData) {
         if(orderData.client != null) {
             this.client = orderData.client;

@@ -1,6 +1,5 @@
 package groupe3.crm.security;
 
-import groupe3.crm.configuration.AuthentificationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,12 +18,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private AuthentificationEntryPoint authEntryPoint;
 
     @Autowired
-    public SecurityConfiguration(AuthentificationEntryPoint authentificationEntryPoint) {
-        this.authEntryPoint = authentificationEntryPoint;
-    }
+    public SecurityConfiguration() {}
 
     // Méthode pour configurer le mode d'authentification
     @Autowired
@@ -41,10 +37,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .anyRequest().authenticated() // Pour toutes les autres requêtes, on demande une authentification
-                .and()
-                .httpBasic()
-                .authenticationEntryPoint(authEntryPoint);
+                .anyRequest().permitAll();// Pour toutes les autres requêtes, on demande une authentification
+        
         http.csrf().disable();
     }
 

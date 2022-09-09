@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import lombok.Data;
@@ -29,7 +28,7 @@ import org.hibernate.validator.constraints.Length;
 @Data
 @NoArgsConstructor
 @JsonSerialize(using = ClientSerializer.class)
-public class Client implements Serializable {
+public class Client extends AbstractEntity<Client> implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,8 +40,8 @@ public class Client implements Serializable {
     @Column(nullable = false)
     private String firstName;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "client", orphanRemoval = true, cascade = CascadeType.REMOVE)
-    private Company company;
+    @Column(nullable = false)
+    private String company;
 
     @Email
     @Column(nullable = false)
@@ -69,6 +68,7 @@ public class Client implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "client", cascade = CascadeType.REMOVE)
     private List<Order> orders = new ArrayList<>();
 
+    @Override
     public void copy(Client clientData) {
         if (clientData.address != null) {
             this.address = clientData.address;
@@ -100,9 +100,29 @@ public class Client implements Serializable {
         if (clientData.phone != null) {
             this.phone = clientData.phone;
         }
-        
+
         if (clientData.zipCode != null) {
             this.zipCode = clientData.zipCode;
         }
+    }
+
+    public Double getTotalWithoutTax() {
+        Double totalWithoutTax = 0D;
+        for (Order order : this.orders) {
+            if (!order.getStatus().equals("CANCELED")) {
+                totalWithoutTax += order.getTotalWithoutTax();
+            }
+        }
+        return totalWithoutTax;
+    }
+
+    public Double getTotalWithTax() {
+        Double totalWithTax = 0D;
+        for (Order order : this.orders) {
+            if (!order.getStatus().equals("CANCELED")) {
+                totalWithTax += order.getTotalWithTax();
+            }
+        }
+        return totalWithTax;
     }
 }

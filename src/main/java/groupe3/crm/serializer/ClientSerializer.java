@@ -28,14 +28,15 @@ public class ClientSerializer extends StdSerializer<Client> {
         jsonGenerator.writeNumberField("id", client.getId());
         jsonGenerator.writeStringField("firstName", client.getFirstName());
         jsonGenerator.writeStringField("lastName", client.getLastName());
-        jsonGenerator.writeObjectFieldStart("company");
-        {
-            if (client.getCompany() != null) {
-                jsonGenerator.writeNumberField("id", client.getCompany().getId());
-                jsonGenerator.writeStringField("name", client.getCompany().getName());
-            }
-        }
-        jsonGenerator.writeEndObject();
+        jsonGenerator.writeStringField("company", client.getCompany());
+//        jsonGenerator.writeObjectFieldStart("company");
+//        {
+//            if (client.getCompany() != null) {
+//                jsonGenerator.writeNumberField("id", client.getCompany().getId());
+//                jsonGenerator.writeStringField("name", client.getCompany().getName());
+//            }
+//        }
+//        jsonGenerator.writeEndObject();
         jsonGenerator.writeStringField("email", client.getEmail());
         jsonGenerator.writeStringField("phone", client.getPhone());
         jsonGenerator.writeStringField("address", client.getAddress());
@@ -43,7 +44,6 @@ public class ClientSerializer extends StdSerializer<Client> {
         jsonGenerator.writeStringField("city", client.getCity());
         jsonGenerator.writeStringField("country", client.getCountry());
         jsonGenerator.writeBooleanField("active", client.getActive());
-
         jsonGenerator.writeArrayFieldStart("orders");
         for (Order o : client.getOrders()) {
             jsonGenerator.writeStartObject();
@@ -54,7 +54,8 @@ public class ClientSerializer extends StdSerializer<Client> {
             jsonGenerator.writeEndObject();
         }
         jsonGenerator.writeEndArray();
-
+        jsonGenerator.writeNumberField("totalWithoutTax", client.getTotalWithoutTax());
+        jsonGenerator.writeNumberField("totalWithTax", client.getTotalWithTax());
         jsonGenerator.writeEndObject();
     }
 }
