@@ -42,7 +42,7 @@ public class User extends AbstractEntity<User> implements Serializable{
     @Column(nullable = false)
     private String password;
     
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -61,6 +61,4 @@ public class User extends AbstractEntity<User> implements Serializable{
             this.roles = userData.roles;
         }
     }
-    
-    
 }
