@@ -55,7 +55,7 @@ public class ClientController extends AbstractController<Client, ClientRepositor
         return super.create(client);
     }
 
-    @ApiOperation(value = "Updates the client with given id", nickname = "Update client")
+    @ApiOperation(value = "Updates the client with given id", nickname = "Update client", response = Client.class)
     @Override
     public ResponseEntity update(@RequestBody Client client, @PathVariable("id") Long id) {
         return super.update(client, id);
