@@ -1,6 +1,7 @@
 package groupe3.crm.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import groupe3.crm.serializer.UserSerializer;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
-@JsonSerialize
+@JsonSerialize(using = UserSerializer.class)
 public class User extends AbstractEntity<User> implements Serializable{
     
     @Id
