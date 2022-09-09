@@ -1,6 +1,5 @@
 package groupe3.crm.controller;
 
-import groupe3.crm.model.Client;
 import groupe3.crm.model.Order;
 import groupe3.crm.model.User;
 import groupe3.crm.repository.UserRepository;
