@@ -1,9 +1,8 @@
 package groupe3.crm.controller;
 
-import groupe3.crm.model.Client;
 import groupe3.crm.model.Order;
 import groupe3.crm.repository.OrderRepository;
-import groupe3.crm.service.implementation.OrderServiceImplementation;
+import groupe3.crm.service.OrderServiceImplementation;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

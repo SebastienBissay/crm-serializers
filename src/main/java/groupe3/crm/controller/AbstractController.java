@@ -3,7 +3,7 @@ package groupe3.crm.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import groupe3.crm.model.AbstractEntity;
-import groupe3.crm.service.implementation.AbstractServiceImplementation;
+import groupe3.crm.service.AbstractServiceImplementation;
 import java.util.List;
 import java.util.Optional;
 import javax.ws.rs.core.MediaType;

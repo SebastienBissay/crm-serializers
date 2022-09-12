@@ -1,4 +1,4 @@
-package groupe3.crm.service.implementation;
+package groupe3.crm.service;
 
 import groupe3.crm.model.Order;
 import org.springframework.stereotype.Service;

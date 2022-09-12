@@ -1,4 +1,4 @@
-package groupe3.crm.service.implementation;
+package groupe3.crm.service;
 
 import groupe3.crm.model.Client;
 import groupe3.crm.repository.ClientRepository;

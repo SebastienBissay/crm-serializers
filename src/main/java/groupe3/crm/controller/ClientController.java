@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import groupe3.crm.service.implementation.ClientServiceImplementation;
+import groupe3.crm.service.ClientServiceImplementation;
 import io.swagger.annotations.ApiOperation;
 import java.util.ArrayList;
 import java.util.List;

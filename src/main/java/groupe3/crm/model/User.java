@@ -44,7 +44,7 @@ public class User extends AbstractEntity<User> implements Serializable, UserDeta
     @Email
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)

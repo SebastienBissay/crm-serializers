@@ -3,7 +3,7 @@ package groupe3.crm.controller;
 import groupe3.crm.model.Order;
 import groupe3.crm.model.User;
 import groupe3.crm.repository.UserRepository;
-import groupe3.crm.service.implementation.UserServiceImplementation;
+import groupe3.crm.service.UserServiceImplementation;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

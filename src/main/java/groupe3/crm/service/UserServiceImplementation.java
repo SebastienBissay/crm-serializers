@@ -1,10 +1,12 @@
-package groupe3.crm.service.implementation;
+package groupe3.crm.service;
 
 import groupe3.crm.model.User;
 import groupe3.crm.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,10 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class UserServiceImplementation extends AbstractServiceImplementation<User, UserRepository> implements UserDetailsService{
+public class UserServiceImplementation extends AbstractServiceImplementation<User, UserRepository> implements UserDetailsService {
     
-    private final UserRepository userRepository;
-
+    private UserRepository userRepository;
+    
+    @Autowired
     public UserServiceImplementation(UserRepository userRepository) {
         super();
         this.tEntityClass = User.class.getSimpleName();
@@ -26,6 +29,8 @@ public class UserServiceImplementation extends AbstractServiceImplementation<Use
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return this.userRepository.findByEmail(email).orElseThrow();
+        System.out.println(email);
+        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Invalid username or password."));
+        return user;
     }
 }

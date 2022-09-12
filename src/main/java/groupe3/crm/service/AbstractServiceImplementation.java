@@ -1,4 +1,4 @@
-package groupe3.crm.service.implementation;
+package groupe3.crm.service;
 
 import groupe3.crm.model.AbstractEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
