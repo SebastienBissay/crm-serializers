@@ -24,7 +24,6 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println(username);
         UserDetails userDetails = this.userServiceImplementation.loadUserByUsername(username);
         return new User(username, userDetails.getPassword(), new ArrayList<>());
     }

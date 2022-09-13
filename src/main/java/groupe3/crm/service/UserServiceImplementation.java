@@ -36,7 +36,6 @@ public class UserServiceImplementation extends AbstractServiceImplementation<Use
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println(email);
         User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Invalid username or password."));
         return user;
     }
