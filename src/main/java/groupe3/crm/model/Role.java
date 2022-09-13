@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "roles")
 @Data
 @NoArgsConstructor
-public class Role implements Serializable{
+public class Role extends AbstractEntity<Role> implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,4 +31,14 @@ public class Role implements Serializable{
     
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
+
+    @Override
+    public void copy(Role role) {
+        if (role.title != null) {
+            this.title = role.title;
+        }
+        if (!role.users.isEmpty()) {
+            this.users.addAll(role.users);
+        }
+    }
 }
